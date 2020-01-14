@@ -1,0 +1,17 @@
+﻿@model IList<Google.Apis.YouTube.v3.Data.SearchResult>
+@{
+    ViewBag.Title = "Searcher";
+}
+
+<div class="container">
+   @foreach (var searchResult in Model)
+   {
+
+       @searchResult.Snippet.Title
+       <br />
+       @searchResult.Id.VideoId
+       <br/>
+   }
+
+</div>
+

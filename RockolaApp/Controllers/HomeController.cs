@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Google.Apis.Services;
+using Google.Apis.YouTube.v3;
+using Google.Apis.YouTube.v3.Data;
+
+
 
 namespace RockolaApp.Controllers
 {
@@ -13,6 +18,33 @@ namespace RockolaApp.Controllers
             return View();
         }
 
+        [HttpGet]
+        public ActionResult YoutubeVideosSearcher(string keyword)
+        {
+            var searchResults = SearchVideo(keyword);
+          
+
+            return PartialView("Searcher",searchResults);
+        }
+
+
+        public IList<SearchResult> SearchVideo(string keyword)
+        {
+            //Construyendo el servicio de Youtube
+            YouTubeService youtube = new YouTubeService(new BaseClientService.Initializer()
+            {
+                ApiKey = "AIzaSyB-ZRCGoIE_3jqgI_e31ePVZSSkAu0uYTI"
+            });
+
+            SearchResource.ListRequest listRequest = youtube.Search.List("snippet");
+            listRequest.Q = keyword;
+            listRequest.MaxResults = 10;
+
+
+            SearchListResponse searchResponse = listRequest.Execute();
+            IList<SearchResult> searchResults = searchResponse.Items;
+            return searchResults;
+        }
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
