@@ -33,12 +33,12 @@ namespace RockolaApp.Controllers
             //Construyendo el servicio de Youtube
             YouTubeService youtube = new YouTubeService(new BaseClientService.Initializer()
             {
-                ApiKey = "AIzaSyB-ZRCGoIE_3jqgI_e31ePVZSSkAu0uYTI"
+                ApiKey = "AIzaSyA-HQVqE6Smy-oBBk9RPrYx7jL1VwYMXTI"
             });
 
             SearchResource.ListRequest listRequest = youtube.Search.List("snippet");
             listRequest.Q = keyword;
-            listRequest.MaxResults = 10;
+            listRequest.MaxResults = 6;
 
 
             SearchListResponse searchResponse = listRequest.Execute();

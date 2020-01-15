@@ -1,17 +1,39 @@
-﻿@{
+﻿
+
+@{
     ViewBag.Title = "Home Page";
 }
 
+<div class="container" style="height:1000px;">
+    <div class="row">
+        <div class="col-lg-7">
+            <a class="btn btn-outline-secondary" href="javascript:void(0);" onclick="btnSearch()"><span class="fa fa-align-justify text-dark"></span></a>
+            <input type="text" class="form-control col-lg-10" style="display:inline-block;" id="txtkeyword" placeholder="buscar" />
+            <a class="btn btn-outline-secondary" href="javascript:void(0);" onclick="btnSearch()"><span class="fas fa-search text-dark"></span></a>
+            <div class="container col-lg-11" style="padding-left: 0px;padding-right: 7px;">
+                <div class="container " id="YoutubeList" style="padding-left: 0px;">
 
-<div class="col-md-4">
-    <input type="text" class="form-control" id="txtkeyword" placeholder="buscar" />
-    <a class="btn btn-default" href="javascript:void(0);" onclick="btnSearch()">content</a>
-</div>
-<div class="col-md-4">
-    <div class="container" id="YoutubeList">
-        
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <iframe width="420" height="345" src="https://www.youtube.com/embed/tgbNymZ7vqY"></iframe>
+        </div>
+
     </div>
+
+    <div class="control-group row col-lg-13 mt-3">
+        @*<div class="col-md-2 jumbotron" style="margin-right: 7px;"></div>*@
+        <iframe width="250" height="150" src="https://www.youtube.com/embed/qJT2FY1jjjE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <iframe width="250" height="150" src="https://www.youtube.com/embed/mSmsjrMjB5g" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <iframe width="250" height="150" src="https://www.youtube.com/embed/YT9AKrI1PiU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <iframe width="250" height="150" src="https://www.youtube.com/embed/3Za2NfBAkNk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+
+
 </div>
+
+
 <script>
 
     function btnSearch() {
