@@ -21,18 +21,14 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-4" id="player">
-        <iframe width="420" height="345" src="https://www.youtube.com/embed/tgbNymZ7vqY"></iframe>
+    <div class="col-lg-4 table-bordered bg-dark" id="player">
+        @*<iframe width="420" height="345" src="https://www.youtube.com/embed/tgbNymZ7vqY"></iframe>*@
     </div>
 
 </div>
 
-<div class="control-group row col-lg-13 mt-3" id="playList">
-    @*<div class="col-md-2 jumbotron" style="margin-right: 7px;"></div>*@
-    <iframe width="250" height="150" src="https://www.youtube.com/embed/qJT2FY1jjjE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    <iframe width="250" height="150" src="https://www.youtube.com/embed/mSmsjrMjB5g" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    <iframe width="250" height="150" src="https://www.youtube.com/embed/YT9AKrI1PiU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    <iframe width="250" height="150" src="https://www.youtube.com/embed/3Za2NfBAkNk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<div class="control-group row col-lg-13 mt-3 table-bordered bg-dark" id="playList" style="height:200px;">
+   
 </div>
 
 
@@ -56,14 +52,18 @@
     // 3. This function creates an <iframe> (and YouTube player)
     //    after the API code downloads.
     var player;
-    function onYouTubeIframeAPIReady(videoId) {
+    var band = false;
+    var playListContainer;
+    var videoStopped = false;
+    function onYouTubeIframeAPIReady(videoId = 'y7LAbdoNBJA') {
         player = new YT.Player('player', {
-            height: '390',
-            width: '640',
+            height: '400',
+            width: '800',
             videoId: videoId,
             events: {
                 'onReady': onPlayerReady,
-                'onStateChange': onPlayerStateChange
+                'onStateChange': onPlayerStateChange,
+                
             }
         });
     }
@@ -77,10 +77,69 @@
     //    the player should play for six seconds and then stop.
     var done = false;
     function onPlayerStateChange(event) {
-        if (event.data == YT.PlayerState.PLAYING && !done) {
-            setTimeout(stopVideo, 6000);
-            done = true;
+        if (event.data == YT.PlayerState.PLAYING) {
+            band = true;
+        } else if (event.data == YT.PlayerState.PAUSED)
+        {
+            band = false;
         }
+        console.log(event.data);
+        //console.log(event.data == YT.PlayerState.PLAYING);
+        //console.log(YT.PlayerState.PLAYING);
+        //console.
+        if (event.data == YT.PlayerState.ENDED && !done)
+        {
+            //reproducir 1er video de la cola
+            playListContainer = document.getElementById('playList');
+            var nextVideoToPlay = playListContainer.children[0];
+            console.log(nextVideoToPlay);
+            console.log('dd');
+            videoStopped = true;
+            playQueue();
+            
+        }
+        //if (event.data == YT.PlayerState.PLAYING && !done) {
+        //    console.log(event.data);
+        //    //console.log(event.data == YT.PlayerState.PLAYING);
+        //    //console.log('ee');
+        //    setTimeout(stopVideo, 6000);
+        //    done = true;
+        //}
+            //
+        //} else {
+        //    if (event.data == )
+        //}
+    }
+
+    function stopVideo() {
+        player.stopVideo();
+    }
+
+    function addToPlayList(videoId,videoImageURL)
+    {
+        if (band)
+        {
+            //Agregar a playlist
+            playListContainer = document.getElementById('playList');
+            var img = document.createElement('img');
+            img.src = videoImageURL;
+            img.alt = videoId;
+            img.classList = "table-bordered border-danger rounded mx-2 mt-2 mb-2";
+            img.width = 190;
+            playListContainer.append(img);
+        } else {
+            player.destroy();
+            onYouTubeIframeAPIReady(videoId);
+        }
+    }
+
+    function playQueue()
+    {
+        var firstVideo = playListContainer.children[0];
+        var videoId = firstVideo.alt;
+        firstVideo.remove();
+        player.destroy();
+        onYouTubeIframeAPIReady(videoId);
     }
 
 
