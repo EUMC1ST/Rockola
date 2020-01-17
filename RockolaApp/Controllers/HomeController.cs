@@ -15,7 +15,7 @@ namespace RockolaApp.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return View("");
         }
 
         [HttpGet]

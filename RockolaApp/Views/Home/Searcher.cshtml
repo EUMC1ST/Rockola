@@ -9,13 +9,14 @@
         @foreach (var searchResult in Model)
         {
             @*<a class="btn-default"><li class="list-group-item btn-outline-secondary">@searchResult.Snippet.Title <a>dd</a></li></a>*@
-            <a href="www.google.com" class="list-group-item list-group-item-action">
+            <a class="list-group-item list-group-item-action">
                 <div class="row col-lg-13">
                     <div class="col-lg-9">
                         <b>@searchResult.Snippet.Title</b>
                     </div>
                     <div class="col-lg-3" style="padding-left: 61px;">
-                        <span class="btn btn-block fas fa-list  text-dark col-sm-1"></span>
+
+                        <span class="btn btn-block fas fa-list  text-dark col-sm-1" onclick="player.destroy(); onYouTubeIframeAPIReady('@searchResult.Id.VideoId')"></span>
                     </div>
                 </div>
 
