@@ -4,12 +4,6 @@
     ViewBag.Title = "Home Page";
 }
 
-<script>
-    console.log(!window['YT']);
-    console.log(!window['YTConfig']);
-    console.log(!YT.loading);
-
-</script>
 <div class="row">
     <div class="col-lg-7">
         <a class="btn btn-outline-secondary" href="javascript:void(0);" onclick="btnSearch()"><span class="fa fa-align-justify text-dark"></span></a>
@@ -36,6 +30,9 @@
 
 <script>
 
+    //console.log(window['YT']);
+    //console.log(window['YTConfig']);
+    //console.log(YT.loading);
     var tag = document.createElement('script');
     /**
     * Retrieves the URL to an external file
@@ -55,7 +52,12 @@
     var band = false;
     var playListContainer;
     var videoStopped = false;
-    function onYouTubeIframeAPIReady(videoId = 'y7LAbdoNBJA') {
+    //function onYouTubeIframeAPIReady(videoId = 'y7LAbdoNBJA'  ) {
+    function onYouTubeIframeAPIReady(videoId) {
+        if (videoId == undefined)
+        {
+            videoId = 'y7LAbdoNBJA';
+        }
         player = new YT.Player('player', {
             height: '400',
             width: '800',
@@ -83,17 +85,16 @@
         {
             band = false;
         }
-        console.log(event.data);
+        //console.log(event.data);
         //console.log(event.data == YT.PlayerState.PLAYING);
         //console.log(YT.PlayerState.PLAYING);
-        //console.
+
         if (event.data == YT.PlayerState.ENDED && !done)
         {
             //reproducir 1er video de la cola
             playListContainer = document.getElementById('playList');
             var nextVideoToPlay = playListContainer.children[0];
             console.log(nextVideoToPlay);
-            console.log('dd');
             videoStopped = true;
             playQueue();
             
