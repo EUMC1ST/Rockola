@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
 using Google.Apis.YouTube.v3.Data;
-
+using RockolaApp.ServiceReferenceWCFYoutube;
 
 
 namespace RockolaApp.Controllers
@@ -21,9 +21,9 @@ namespace RockolaApp.Controllers
         [HttpGet]
         public ActionResult YoutubeVideosSearcher(string keyword)
         {
-            var searchResults = SearchVideo(keyword);
-          
 
+            // var searchResults = SearchVideo(keyword);
+            var searchResults = SearchVideoFromWCFServiceApp(keyword);
             return PartialView("Searcher",searchResults);
         }
 
@@ -45,6 +45,16 @@ namespace RockolaApp.Controllers
             IList<SearchResult> searchResults = searchResponse.Items;
             return searchResults;
         }
+
+
+        
+        public IList<ServiceReferenceWCFYoutube.SearchResultCustomized>SearchVideoFromWCFServiceApp(string keyword)
+        {
+            ServiceReferenceWCFYoutube.Service1Client service= new Service1Client();
+            var listVideos = service.SearchYoutubeVideo(keyword);
+            return listVideos;
+        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

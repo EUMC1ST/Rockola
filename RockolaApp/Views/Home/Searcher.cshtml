@@ -1,4 +1,5 @@
-﻿@model IList<Google.Apis.YouTube.v3.Data.SearchResult>
+﻿@*@model IList<Google.Apis.YouTube.v3.Data.SearchResult>*@
+@model IList<RockolaApp.ServiceReferenceWCFYoutube.SearchResultCustomized>
 @{
     ViewBag.Title = "Searcher";
 }
@@ -12,12 +13,14 @@
             <a class="list-group-item list-group-item-action">
                 <div class="row col-lg-13">
                     <div class="col-lg-9">
-                        <b>@searchResult.Snippet.Title</b>
+                        @*<b>@searchResult.Snippet.Title</b>*@
+                        <b>@searchResult.Title</b>
                     </div>
                     <div class="col-lg-3" style="padding-left: 61px;">
 
-                        
-                        <span class="btn btn-block fas fa-list  text-dark col-sm-1" onclick="addToPlayList('@searchResult.Id.VideoId','@searchResult.Snippet.Thumbnails.Default__.Url');"></span>
+
+                        @*<span class="btn btn-block fas fa-list  text-dark col-sm-1" onclick="addToPlayList('@searchResult.Id.VideoId','@searchResult.Snippet.Thumbnails.Default__.Url');"></span>*@
+                        <span class="btn btn-block fas fa-list  text-dark col-sm-1" onclick="addToPlayList('@searchResult.VideoId','@searchResult.ImageURL');"></span>
                     </div>
                 </div>
 
