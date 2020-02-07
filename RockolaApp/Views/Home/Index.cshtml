@@ -25,6 +25,10 @@
    
 </div>
 
+<div class="control-group row col-lg-13 mt-3 table-bordered bg-dark" id="YoutubeListSaved" style="height:200px;">
+
+</div>
+
 
 
 
@@ -39,7 +43,7 @@
     * that contains the source code or data.
     */
     tag.src = "https://www.youtube.com/iframe_api";
-    console.log(tag)
+    console.log(tag);
     /** document.getElementsByTagName return HTMLCollection*/
     var scriptTags = document.getElementsByTagName('script');
     console.log(scriptTags);
@@ -116,10 +120,14 @@
         player.stopVideo();
     }
 
-    function addToPlayList(videoId,videoImageURL)
+    //function addToPlayList(obj)
+
+    function addToPlayList(title,videoId,videoImageURL)
     {
-        if (band)
-        {
+
+        if (band) {
+            
+
             //Agregar a playlist
             playListContainer = document.getElementById('playList');
             var img = document.createElement('img');
@@ -128,10 +136,12 @@
             img.classList = "table-bordered border-danger rounded mx-2 mt-2 mb-2";
             img.width = 190;
             playListContainer.append(img);
+            sendVideoToWebAPI(title, videoId, videoImageURL);
         } else {
             player.destroy();
             onYouTubeIframeAPIReady(videoId);
         }
+        
     }
 
     function playQueue()
@@ -148,9 +158,27 @@
         $.ajax({
             url: '@Url.Action("YoutubeVideosSearcher")?keyword='+$('#txtkeyword').val(),
             type: 'GET',
-            success: function (result)
-            {
-                $('#YoutubeList').html(result)
+            success: function (result) {
+                $('#YoutubeList').html(result);
+            }
+        });
+    }
+
+    function sendVideoToWebAPI(title, videoId, videoImageURL) {
+        var Video = {  
+            Title: title,  
+            VideoId : videoId,  
+            ImageUrl: videoImageURL  
+        };  
+
+        $.ajax({
+            type: "POST", 
+            url: "/Home/SendVideoTOWebAPI",
+            data: JSON.stringify(Video),//`{title:${title},videoId:${videoId},imageURL:${videoImageURL}`,
+            dataType: "json",
+            contentType: 'application/json; charset=utf-8', 
+            success: function (result) {
+                result.forEach(element => $('#YoutubeListSaved').html(element));
             }
         });
     }
