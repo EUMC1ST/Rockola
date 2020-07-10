@@ -10,7 +10,7 @@ using Google.Apis.YouTube.v3.Data;
 using RockolaApp.ServiceReferenceWCFYoutube;
 using RockolaApp.Models;
 using SearchResultCustomized = RockolaApp.Models.SearchResultCustomized;
-
+using System.Threading.Tasks;
 
 namespace RockolaApp.Controllers
 {
@@ -34,10 +34,6 @@ namespace RockolaApp.Controllers
                 client.BaseAddress = new Uri("http://localhost:80/youtplayerhistory/api/videos");
                 var responseTask = client.PostAsJsonAsync<Models.SearchResultCustomized>("videos", video);
                 
-                //new StringContent("{ \"firstName\": \"John\" }", System.Text.Encoding.UTF8, "application/json"))
-
-                //HTTP GET/WebApplicationYT
-                //var responseTask = client.GetAsync($"youtube/searchyoutubevideo?keyword={keyword}");
                 responseTask.Wait();
 
                 var result = responseTask.Result;
@@ -100,19 +96,21 @@ namespace RockolaApp.Controllers
             using (var client = new HttpClient())
             {
                 //client.BaseAddress = new Uri("http://localhost:9810/api/");
-                client.BaseAddress = new Uri("http://localhost:80/WebApplicationYT/api/");
+                //client.BaseAddress = new Uri("http://localhost:80/WebApplicationYT/api/");
+                client.BaseAddress = new Uri("https://ytwebapi.azurewebsites.net/api/");
+
 
                 //HTTP GET/WebApplicationYT
                 var responseTask = client.GetAsync($"youtube/searchyoutubevideo?keyword={keyword}");
                 responseTask.Wait();
-
                 var result = responseTask.Result;
+
                 if (result.IsSuccessStatusCode)
                 {
 
 
                     var readTask = result.Content.ReadAsAsync<IList<Models.SearchResultCustomized>>();
-                    readTask.Wait();
+
 
                     searchResultCustomizeds = readTask.Result;
                 }
