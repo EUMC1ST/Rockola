@@ -32,6 +32,10 @@
 
 </div>
 
+<div class="control-group row col-lg-13 mt-3 table-bordered bg-dark" id="YoutubeListSaved" style="height:200px;">
+
+</div>
+
 
 
 
@@ -130,7 +134,11 @@
     {
 
         if (band) {
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> 5fa289247e128f55cf7db7974bf265910435e991
 
             //Agregar a playlist
             playListContainer = document.getElementById('playList');
@@ -145,6 +153,7 @@
             player.destroy();
             onYouTubeIframeAPIReady(videoId);
         }
+<<<<<<< HEAD
 
     }
 
@@ -170,6 +179,9 @@
                 playListContainer.append(img);
             });
         }
+=======
+        
+>>>>>>> 5fa289247e128f55cf7db7974bf265910435e991
     }
 
 
@@ -212,6 +224,28 @@
             type: 'GET',
             success: function (result) {
                 $('#YoutubeList').html(result);
+<<<<<<< HEAD
+=======
+            }
+        });
+    }
+
+    function sendVideoToWebAPI(title, videoId, videoImageURL) {
+        var Video = {  
+            Title: title,  
+            VideoId : videoId,  
+            ImageUrl: videoImageURL  
+        };  
+
+        $.ajax({
+            type: "POST", 
+            url: "/Home/SendVideoTOWebAPI",
+            data: JSON.stringify(Video),//`{title:${title},videoId:${videoId},imageURL:${videoImageURL}`,
+            dataType: "json",
+            contentType: 'application/json; charset=utf-8', 
+            success: function (result) {
+                result.forEach(element => $('#YoutubeListSaved').html(element));
+>>>>>>> 5fa289247e128f55cf7db7974bf265910435e991
             }
         });
     }
